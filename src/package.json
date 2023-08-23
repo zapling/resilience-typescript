@@ -30,11 +30,13 @@
     "build": "node_modules/.bin/tsc",
     "test": "node_modules/.bin/_mocha \"dist/**/*.spec.js\" --reporter=mocha-multi-reporters --reporter-options configFile=reporter-config.json",
     "build-test": "npm run build && npm run test",
-    "copy-readme": "copy ..\\..\\README.md .\\README.md /Y",
-    "copy-package": "copy package.json dist\\package.json /Y",
+    "copy-readme": "cp ../README.md dist/.",
+    "copy-package": "cp package.json dist/.",
     "remove-dist": "( rmdir/Q/S .\\dist || echo done)",
-    "dist": "npm run remove-dist && npm run build-test && npm run copy-package && cd dist && npm run copy-readme && npm publish",
-    "check": "gts check"
+    "dist": "npm run dist-local && cd dist && npm publish",
+    "dist-local": "npm run remove-dist && npm run build && npm run copy-package && npm run copy-readme",
+    "check": "gts check",
+    "build-pnpm-package": "npm run dist-local && cd dist/ && pnpm pack ."
   },
   "dependencies": {
     "applicationinsights": "^1.8.8",
